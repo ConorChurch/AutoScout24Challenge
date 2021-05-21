@@ -1,0 +1,25 @@
+{
+  "name": "autoscout24challenge",
+  "version": "1.0.0",
+  "description": "This is to store and share the code written for the AutoScout24 Challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js",
+    "dev": "tsc -w & nodemon dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ConorChurch/AutoScout24Challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ConorChurch/AutoScout24Challenge/issues"
+  },
+  "homepage": "https://github.com/ConorChurch/AutoScout24Challenge#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.11",
+    "typescript": "^4.2.4"
+  }
+}
