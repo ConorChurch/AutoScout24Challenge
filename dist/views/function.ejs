@@ -1,0 +1,52 @@
+<% 
+averagePriceOfContactedListings = function() {
+  var totalNumberOfListings = 0;
+  var map2 = new Map();
+  var map3 = new Map();
+  for(let i in results2){
+        totalNumberOfListings++;
+        if(map2.has(Object.values(results2[i])[0]) == false){
+                map2.set(Object.values(results2[i])[0], 1);
+        }
+        else if(map2.has(Object.values(results2[i])[0])){
+                map2.set(Object.values(results2[i])[0], map2.get(Object.values(results2[i])[0]) + 1);
+        }
+   }
+   var array = [];
+   var totalPriceOfThirty = 0;
+   for( let entry of map2.entries()){
+        array.push({
+                name: entry[0],
+                value: entry[1]
+        });
+   }
+   var totalContacts = 0;
+   var numberOfListingsInThirtyPercent = 0;
+   var sorted = array.sort(function(a, b) {
+          return (a.value < b.value) ? 1 : ((b.value < a.value) ? -1 : 0)
+   });
+   var array2 = [];
+   for(let i in sorted){
+        if(totalContacts < totalNumberOfListings*0.3){
+                array2.push({
+                        name: Object.values(sorted[i])[0],
+                        value: Object.values(sorted[i])[1]
+                });
+                totalContacts += Object.values(sorted[i])[1];
+                numberOfListingsInThirtyPercent++;
+         }
+   }
+   for(let i in results){
+        if(map3.has(Object.values(results[i])[0]) == false){
+                map3.set(Object.values(results[i])[0], Object.values(results[i])[2]);
+        }
+   }
+   for(let i in array2){
+        if(map3.has(Object.values(array2[i])[0])){
+                totalPriceOfThirty += +map3.get(Object.values(array2[i])[0]);
+        }
+    }
+   var answer = Math.round(totalPriceOfThirty/numberOfListingsInThirtyPercent).toString();
+   return answer;
+};
+%>

@@ -1,0 +1,91 @@
+<%- include("function.ejs") %>
+<%- include("function2.ejs") %>
+<%- include("function3.ejs") %>
+<%- include("function4.ejs") %>
+
+
+<table>
+  <tr>
+    <th>Seller Type</th>
+    <th>Average in Euro</th>
+  </tr>
+  <tr>
+    <td>private</td>
+    <td>€ <%= averageSellerPrice()[0] %>,-</td>
+  </tr>
+  <tr>
+    <td>dealer</td>
+    <td>€ <%= averageSellerPrice()[1] %>,-</td>
+  </tr>
+  <tr>
+    <td>other</td>
+    <td>€ <%= averageSellerPrice()[2] %>,-</td>
+  </tr>
+</table>
+<br><br>
+
+
+<table>
+  <tr>
+    <th>Make</th>
+    <th>Distribution</th>
+  </tr>
+
+<% for(var i=0; i< distributionOfCarsByMake().length; i++) {%>
+   <tr>
+        <td><%= distributionOfCarsByMake()[i].name %></td>
+    	<td><%= distributionOfCarsByMake()[i].value %>%</td>
+   </tr>
+<% } %>
+</table>
+<br><br>
+
+
+<table>
+  <tr>
+    <th>Average Price</th>
+  </tr>
+  <tr>
+    <td>€ <%= averagePriceOfContactedListings() %>,-</td>
+  </tr>
+</table>
+<br><br>
+
+
+
+<% var j = 0; %>
+
+
+<h2><% top5ListingsPerMonth(0) %></h2>
+<% for(j=0; j < 12; j++) { %>
+<% if(top5ListingsPerMonth(j) !== null){ %>
+<h2>Month:  <%= j+1 %>.2020 %></h2>
+<table>
+  <tr>
+    <th>Ranking</th>
+    <th>Listing Id</th>
+    <th>Make</th>
+    <th>Selling Price</th>
+    <th>Mileage</th>
+    <th>Total Amount of contacts</th>
+  </tr> 
+  <% for(var i=0; i < top5ListingsPerMonth(j).length; i++) { %>
+   <tr>
+	<td><%= i+1 %></td>
+        <td><%= top5ListingsPerMonth(j)[i].id %></td>
+        <td><%= top5ListingsPerMonth(j)[i].make %></td>
+        <td>€<%= top5ListingsPerMonth(j)[i].price %>,-</td>
+        <td><%= top5ListingsPerMonth(j)[i].mileage %>KM</td>
+        <td><%= top5ListingsPerMonth(j)[i].value %></td>
+   </tr>
+  <% } %>
+<% } %>
+</table>
+
+<br><br>
+<% } %>
+
+<form>
+  <input type="file" id="myFile" name="filename" action="/upload">
+  <input type="submit" value="Submit">
+</form>

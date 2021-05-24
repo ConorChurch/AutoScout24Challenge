@@ -1,0 +1,31 @@
+<%
+averageSellerPrice = function(){
+   var privatePrice = 0;
+   var dealerPrice = 0;
+   var otherPrice = 0;
+   var totalPrivate = 0;
+   var totalDealer = 0;
+   var totalOther = 0;
+
+   for(let i in results){
+        var price = +Object.values(results[i])[2];
+
+        if(Object.values(results[i])[4] == "private"){
+                privatePrice += price;
+                totalPrivate++;
+        }
+        else if(Object.values(results[i])[4] == "dealer"){
+                dealerPrice += price;
+                totalDealer++;
+        }
+        else if(Object.values(results[i])[4] == "other"){
+                otherPrice += price;
+                totalOther++;
+        }
+   }
+
+   var array = [Math.round(privatePrice/totalPrivate), Math.round(dealerPrice/totalDealer), Math.round(otherPrice/totalOther)];
+
+   return array;
+};
+%>
