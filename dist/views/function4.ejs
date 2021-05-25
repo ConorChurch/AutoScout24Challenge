@@ -1,74 +1,77 @@
 <%
 top5ListingsPerMonth = function(getMonth){
+<!-- A Map is needed to check if the id is present and add the date and the occurence of the listing  -->
         var map2 = new Map();
         for(let i in results2){
-                const numDate = +Object.values(results2[i])[1];
-                const date = new Date(numDate);
+            const numDate = +Object.values(results2[i])[1];
+            const date = new Date(numDate);
 
-                if(map2.has(Object.values(results2[i])[0]) == false){
-                        map2.set(Object.values(results2[i])[0], [date.getUTCMonth(), 1]);
-                }
-                else if(map2.has(Object.values(results2[i])[0]) == true){
-                        map2.set(Object.values(results2[i])[0], [date.getUTCMonth(), map2.get(Object.values(results2[i])[0])[1]+1]);
-                }
+            if(map2.has(Object.values(results2[i])[0]) == false){
+                    map2.set(Object.values(results2[i])[0], [date.getUTCMonth(), 1]);
+            }
+            else if(map2.has(Object.values(results2[i])[0]) == true){
+                    map2.set(Object.values(results2[i])[0], [date.getUTCMonth(), map2.get(Object.values(results2[i])[0])[1]+1]);
+            }
         }
+<!-- This array will be used for later when gathering information from both files to display, I push the info I have from the hashmap now -->
         var array = [];
         for( let entry of map2.entries()){
-           array.push({
+            array.push({
                 id: entry[0],
                 make: "",
                 month: entry[1][0],
                 price: "",
                 mileage: "",
                 value: entry[1][1]
-           });
+            });
         }
+<!-- Sorting the array to get the top five contacted listings  -->
         var sorted = array.sort(function(a, b) {
-           return (a.value < b.value) ? 1 : ((b.value < a.value) ? -1 : 0)
+            return (a.value < b.value) ? 1 : ((b.value < a.value) ? -1 : 0)
         });
-
+<!-- if the month that is passed to the function is the same as a month contained in the array then add the contents to the new top5 array  -->
         var top5 = [];
         var count = 0;
         for(let i of sorted){
-
-                if(i.month == getMonth && count < 5){
-                        top5[count] = i;
-
-                        count++;
-                }
-
+            if(i.month == getMonth && count < 5){
+                top5[count] = i;
+                count++;
+            }
         }
+<!-- This is so I am not printing out html headers if the contacts file doesn't contain a certain month -->
 	if(top5[0] == null){
-		return null;
+	    return null;
 	}
+<!-- I compare my id from my original Map in order to get the rest of the corresponding information to that id and add it to my sorted array  -->
         for(let i in results){
-                if(Object.values(results[i])[0] == top5[0].id){
-                        top5[0].make    = Object.values(results[i])[1];
-                        top5[0].price = Object.values(results[i])[2];
-                        top5[0].mileage = Object.values(results[i])[3];
-                }
-                else if(Object.values(results[i])[0] == top5[1].id){
-                        top5[1].make = Object.values(results[i])[1];
-                        top5[1].price = Object.values(results[i])[2];
-                        top5[1].mileage = Object.values(results[i])[3];
-                }
-                else if(Object.values(results[i])[0] == top5[2].id){
-                        top5[2].make = Object.values(results[i])[1];
-                        top5[2].price = Object.values(results[i])[2];
-                        top5[2].mileage = Object.values(results[i])[3];
-                }
-                else if(Object.values(results[i])[0] == top5[3].id){
-                        top5[3].make = Object.values(results[i])[1];
-                        top5[3].price = Object.values(results[i])[2];
-                        top5[3].mileage = Object.values(results[i])[3];
-                }
-                else if(Object.values(results[i])[0] == top5[4].id){
-                        top5[4].make = Object.values(results[i])[1];
-                        top5[4].price = Object.values(results[i])[2];
-                        top5[4].mileage = Object.values(results[i])[3];
-                }
-
+             if(Object.values(results[i])[0] == top5[0].id){
+                 top5[0].make    = Object.values(results[i])[1];
+                 top5[0].price = Object.values(results[i])[2];
+                 top5[0].mileage = Object.values(results[i])[3];
+             }
+             else if(Object.values(results[i])[0] == top5[1].id){
+                 top5[1].make = Object.values(results[i])[1];
+                 top5[1].price = Object.values(results[i])[2];
+                 top5[1].mileage = Object.values(results[i])[3];
+             }
+             else if(Object.values(results[i])[0] == top5[2].id){
+                 top5[2].make = Object.values(results[i])[1];
+                 top5[2].price = Object.values(results[i])[2];
+                 top5[2].mileage = Object.values(results[i])[3];
+             }
+             else if(Object.values(results[i])[0] == top5[3].id){
+                 top5[3].make = Object.values(results[i])[1];
+                 top5[3].price = Object.values(results[i])[2];
+                 top5[3].mileage = Object.values(results[i])[3];
+             }
+             else if(Object.values(results[i])[0] == top5[4].id){
+                 top5[4].make = Object.values(results[i])[1];
+                 top5[4].price = Object.values(results[i])[2];
+                 top5[4].mileage = Object.values(results[i])[3];
+             }
         }
+
+<!-- Returning my array with top5 listings  -->
         return top5;
 };
 %>

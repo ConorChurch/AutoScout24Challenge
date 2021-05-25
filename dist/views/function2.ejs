@@ -6,7 +6,7 @@ averageSellerPrice = function(){
    var totalPrivate = 0;
    var totalDealer = 0;
    var totalOther = 0;
-
+<!-- Gathering total price of each seller type and counting the total number of that particular seller -->
    for(let i in results){
         var price = +Object.values(results[i])[2];
 
@@ -23,7 +23,7 @@ averageSellerPrice = function(){
                 totalOther++;
         }
    }
-
+<!-- Returning an array with the averages -->
    var array = [Math.round(privatePrice/totalPrivate), Math.round(dealerPrice/totalDealer), Math.round(otherPrice/totalOther)];
 
    return array;

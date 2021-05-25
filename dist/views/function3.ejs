@@ -3,8 +3,8 @@ distributionOfCarsByMake = function() {
    var totalNumberOfCars = 0;
 
    var map2 = new Map();
-
-  for(let i in results){
+<!-- A Map is needed to check if the Make is contained in the Map and add the occurences -->
+   for(let i in results){
         totalNumberOfCars++;
         if(map2.has(Object.values(results[i])[1]) == false){
                 map2.set(Object.values(results[i])[1], 1);
@@ -14,7 +14,7 @@ distributionOfCarsByMake = function() {
         }
 
    }
-
+<!-- An array is created to take in the Map entries, but the value being the percentage of the car occurence -->
    var array = [];
    for( let entry of map2.entries()){
         array.push({
@@ -22,10 +22,10 @@ distributionOfCarsByMake = function() {
                 value: Math.round((entry[1]/totalNumberOfCars)*100)
         });
    }
-
+<!-- The array is sorted to give the highest distribution at the top and lowest distribution at the bottom -->
    var sorted = array.sort(function(a, b) {
    return (a.value < b.value) ? 1 : ((b.value < a.value) ? -1 : 0)
-});
+   });
 
 
    return sorted;

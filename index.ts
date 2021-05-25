@@ -26,8 +26,14 @@ fs.createReadStream('contacts.csv')
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.get('/', async (req, res) => {
+    res.status(200);
+    res.json({message: 'pass!'})
+});
+
 
 app.get('/home', (req, res) => {
+    res.status(200);
     res.render('home', {results2, results});
 });
 
@@ -35,7 +41,5 @@ app.get('/reuse', (req, res) => {
     res.render('home', {results2, results});
 });
 
-
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => console.log(`App listening on PORT ${port}`));
+export default app;
+module.exports = app;

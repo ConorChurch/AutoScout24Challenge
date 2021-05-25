@@ -1,8 +1,11 @@
 <% 
 averagePriceOfContactedListings = function() {
+ 
+<!-- Creating the Maps to check if the field already exists and if not add it to the Map and add the occurence of it -->
   var totalNumberOfListings = 0;
   var map2 = new Map();
   var map3 = new Map();
+<!-- If the id field is not present add it to the Map and if it is present increment the counter and also counting the number of listings for later -->
   for(let i in results2){
         totalNumberOfListings++;
         if(map2.has(Object.values(results2[i])[0]) == false){
@@ -12,6 +15,7 @@ averagePriceOfContactedListings = function() {
                 map2.set(Object.values(results2[i])[0], map2.get(Object.values(results2[i])[0]) + 1);
         }
    }
+<!-- Adding contents of Map to a new array as it is info I need to sort -->
    var array = [];
    var totalPriceOfThirty = 0;
    for( let entry of map2.entries()){
@@ -20,11 +24,13 @@ averagePriceOfContactedListings = function() {
                 value: entry[1]
         });
    }
+<!-- The array will now be sorted so I can get the 30% top contacted listings more easily starting from the top and adding the total of occurences until it reaches 30% or total listings -->
    var totalContacts = 0;
    var numberOfListingsInThirtyPercent = 0;
    var sorted = array.sort(function(a, b) {
           return (a.value < b.value) ? 1 : ((b.value < a.value) ? -1 : 0)
    });
+<!-- This array will only house the top 30% -->
    var array2 = [];
    for(let i in sorted){
         if(totalContacts < totalNumberOfListings*0.3){
@@ -36,17 +42,21 @@ averagePriceOfContactedListings = function() {
                 numberOfListingsInThirtyPercent++;
          }
    }
+<!-- A second Map is needed to gather the prices of the listings -->
    for(let i in results){
         if(map3.has(Object.values(results[i])[0]) == false){
                 map3.set(Object.values(results[i])[0], Object.values(results[i])[2]);
         }
    }
+<!-- If the sorted array with top 30% contacted listings contains an id in Map3 then add that price -->
    for(let i in array2){
         if(map3.has(Object.values(array2[i])[0])){
                 totalPriceOfThirty += +map3.get(Object.values(array2[i])[0]);
         }
     }
+<!-- Getting the average and returning the result -->
    var answer = Math.round(totalPriceOfThirty/numberOfListingsInThirtyPercent).toString();
    return answer;
 };
+//module.exports = averagePriceOfContactedListings;
 %>
